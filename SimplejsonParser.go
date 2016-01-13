@@ -4,24 +4,26 @@ import ("fmt"
 		"io/ioutil"
 		"strings"
 		"regexp"
+
 		)
 func jsonarrayParser(jsonData string) []string{
 	fmt.Println("Inside array parser")
 	//fmt.Println(jsonData)
 	parsedarray := make([]string,0)
-	returnV := make([]string,0)
 	if jsonData[0] == '['{
 		jsonData = jsonData[1:]
 		for len(jsonData) > 0 {
-			result := parserFactory(jsonData, stringParser, numberParser, boolParser, nullParser, jsonarrayParser)
+
+			result := parserCombinator(jsonData, stringParser, numberParser, boolParser, nullParser, jsonarrayParser)
 			//fmt.Println(result)
 			if len(result) > 0{
-				parsedarray = append(parsedarray,string(result[0]))
-				//.Println(parsedarray)
-				jsonData = string(result[1])
-				
+				fmt.Println(result[0],"flag")
+				parsedarray = append(parsedarray,result[0])	
+				jsonData = result[1]
+				fmt.Println(parsedarray)
 			 	result = commaParser(jsonData)
 				if result != nil{
+					parsedarray = append(parsedarray,result[0])
 					jsonData = jsonData[1:]
 				}
 			//fmt.Println(jsonData)
@@ -32,15 +34,9 @@ func jsonarrayParser(jsonData string) []string{
 		}
 	}
 }
-	returnV = appendall2(parsedarray, jsonData)
-	return (returnV)
+	return nil
 } 
 
-/*func jsonObjectParser(jsonData string) []string {
-	fmt.Println("Inside object parser")
-	
-	
-}*/
 func appendall2(result []string,data string) []string{
 	returnV := make([]string,0)
 	returnV = append(returnV, result...)
@@ -147,7 +143,7 @@ func coloParser(jsonData string) []string {
 	}
 	return nil
 }
-func parserFactory(jsonData string,args ...func(string) []string) []string{
+func parserCombinator(jsonData string,args ...func(string) []string) []string{
 	
 		for _,each := range args {
 		result := each(jsonData)
@@ -168,5 +164,5 @@ func main(){
 	}
 	data:= string(buf)
 	//fmt.Println(data)
-	fmt.Println(parserFactory(data, jsonarrayParser))
+	fmt.Println(parserCombinator(data, jsonarrayParser))
 }
