@@ -4,6 +4,7 @@ import ("fmt"
 		"io/ioutil"
 		"strings"
 		"regexp"
+		"os"
 
 		)
 func jsonarrayParser(jsonData string) []string{
@@ -17,10 +18,9 @@ func jsonarrayParser(jsonData string) []string{
 			result := parserCombinator(jsonData, stringParser, numberParser, boolParser, nullParser, jsonarrayParser)
 			//fmt.Println(result)
 			if len(result) > 0{
-				fmt.Println(result[0],"flag")
 				parsedarray = append(parsedarray,result[0])	
 				jsonData = result[1]
-				fmt.Println(parsedarray)
+				//fmt.Println(parsedarray)
 			 	result = commaParser(jsonData)
 				if result != nil{
 					parsedarray = append(parsedarray,result[0])
@@ -161,6 +161,7 @@ func main(){
 	buf,err := ioutil.ReadFile("test.txt")// whole file at a time (Readall) 
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(0)
 	}
 	data:= string(buf)
 	//fmt.Println(data)
