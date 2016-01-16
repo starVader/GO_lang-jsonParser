@@ -1,4 +1,5 @@
 # GO_lang-jsonParser
 
 
-currently it parses only arrays
+Parses json strings with format 
+type mystring []interface{}
