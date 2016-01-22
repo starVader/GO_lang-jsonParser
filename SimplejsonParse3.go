@@ -1,4 +1,4 @@
-package main
+package main 
 
 import ("fmt"
 		"io/ioutil"
@@ -6,6 +6,7 @@ import ("fmt"
 		"os"
 		"regexp"
 		"strconv"
+		//"reflect"
 		)
 
 
@@ -14,7 +15,7 @@ type json struct {
 	 String string
 	 Number int
 	 Float float64 
-	 Array []interface{}
+	 Array []json
 	 Object map[string]json
 	 Parsed bool
 	 Null interface{}
@@ -66,7 +67,7 @@ func numberParser(jsonData string) (json, string) {
 func arrayParser(jsonData string) (json,string) {
 	//Parses json arrays and stores them into the user defined type else returns the data
 	var result json
-	parsed := make([]interface{},0)
+	parsed := make([]json,0)
 	if jsonData[0] == '[' {
 		jsonData = jsonData[1:]
 		for len(jsonData) > 0 {
@@ -196,6 +197,17 @@ func (m json) getElement() interface{} {
 			return m.Object
 		case "Number":
 			return m.Number
+		case "Array":
+			return m.Array
+		case "Null":
+			return m.Null
+		case "Float":
+			return m.Float
+		case "Bool":
+			return m.Bool
+		default:
+			fmt.Println("Don't know how to handle the type")
+			os.Exit(1)
 	}
 	return ""
 }
@@ -209,22 +221,20 @@ func main(){
 	data := string(buf) //bytes to string
 	if data[0] == '['{
 		result,_ :=arrayParser(data)
-		final := result.Array
-		for _,k := range final {
-			fmt.Println(k)
-
-		}
+		final := result.getElement()
+		fmt.Println(final)          // we can extract the parsed data using getElement() if we know the structure
+	
 	}else if data[0] =='{' {
 		result,_ :=objParser(data)
 		fmt.Println(result)
 		k := result.getElement()
 		fmt.Println(k)
-		/*m := k.(map[string]json)
+		/*m := k.(map[string]json) // if we know the structure of json we can extract using the getElement()
 		for a,b := range m{
 			fmt.Println("Key:",a,",Value:",b.getElement())
 
-		}
-		*/
+		}*/
+		
 	}
 	os.Exit(0)
 }
