@@ -6,7 +6,6 @@ import ("fmt"
 		"os"
 		"regexp"
 		"strconv"
-		//"reflect"
 		)
 
 
@@ -222,18 +221,14 @@ func main(){
 	if data[0] == '['{
 		result,_ :=arrayParser(data)
 		final := result.getElement()
-		fmt.Println(final)          // we can extract the parsed data using getElement() if we know the structure
+		fmt.Println(final)          
 	
 	}else if data[0] =='{' {
 		result,_ :=objParser(data)
 		fmt.Println(result)
 		k := result.getElement()
 		fmt.Println(k)
-		/*m := k.(map[string]json) // if we know the structure of json we can extract using the getElement()
-		for a,b := range m{
-			fmt.Println("Key:",a,",Value:",b.getElement())
-
-		}*/
+		}
 		
 	}
 	os.Exit(0)
