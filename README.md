@@ -1,5 +1,4 @@
 # GO_lang-jsonParser
 
 
-Parses json strings with format 
-type mystring []interface{}
+A simple json Parser in golang
