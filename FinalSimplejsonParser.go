@@ -228,7 +228,6 @@ func main(){
 		fmt.Println(result)
 		k := result.getElement()
 		fmt.Println(k)
-		}
 		
 	}
 	os.Exit(0)
