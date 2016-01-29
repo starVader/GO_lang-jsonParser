@@ -189,8 +189,8 @@ func elementParser(JsonData string) (Json, string) {
 
 //Utility function to acess the parsed json
 func (m Json) getElement() interface{} {
-	Type := m.Type
-	switch Type {
+	typeof := m.Type
+	switch Typeof {
 		case "String":
 			return m.String
 		case "Object":
