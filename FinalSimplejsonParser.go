@@ -21,6 +21,7 @@ type Json struct {
 	 Type string
 }
 
+var re = regexp.MustCompile("^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)?") //init regex
 
 
 func stringParser(JsonData string) (Json, string) {
@@ -44,7 +45,6 @@ func numberParser(JsonData string) (Json, string) {
 	JsonData = strings.Trim(JsonData, " ")
 	var number Json
 	var result [][]int
-	re := regexp.MustCompile("^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)?") //init regex
 	result1 := re.FindAllString(JsonData, -1)                          //Library function to find occurrence of string and returns a slice of succe elem
 	if len(result1) > 0 {
 		result = re.FindAllStringIndex(JsonData, -1) //Gives start and end index of the string
