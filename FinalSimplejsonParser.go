@@ -21,8 +21,8 @@ type Json struct {
 	 Type string
 }
 
-var re = regexp.MustCompile("^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)?") //init regex
 
+var re = regexp.MustCompile("^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)?")
 
 func stringParser(JsonData string) (Json, string) {
 	//This function parses string elements and returns the string and remaining Jsondata
@@ -190,7 +190,7 @@ func elementParser(JsonData string) (Json, string) {
 //Utility function to acess the parsed json
 func (m Json) getElement() interface{} {
 	typeof := m.Type
-	switch Typeof {
+	switch typeof {
 		case "String":
 			return m.String
 		case "Object":
@@ -207,6 +207,7 @@ func (m Json) getElement() interface{} {
 			return m.Bool
 		default:
 			fmt.Println("Don't know how to handle the type")
+			os.Exit(1)
 	}
 	return ""
 }
@@ -229,4 +230,5 @@ func main(){
 		k := result.getElement()
 		fmt.Println(k)		
 	}
+	os.Exit(0)
 }
